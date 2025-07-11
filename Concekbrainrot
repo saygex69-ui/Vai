@@ -1,0 +1,91 @@
+-- === UI Setup (Fluent Style Blue) ===
+local gui = Instance.new("ScreenGui")
+gui.Name = "SiliconUI"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+local main = Instance.new("Frame", gui)
+main.Size = UDim2.new(0, 280, 0, 340)
+main.Position = UDim2.new(0.5, -140, 0.4, -170)
+main.BackgroundColor3 = Color3.fromRGB(15, 18, 25) -- đen xanh
+main.Active = true
+main.Draggable = true
+Instance.new("UICorner", main)
+
+local shadow = Instance.new("ImageLabel", main)
+shadow.Size = UDim2.new(1, 60, 1, 60)
+shadow.Position = UDim2.new(0, -30, 0, -30)
+shadow.BackgroundTransparency = 1
+shadow.Image = "rbxassetid://1316045217"
+shadow.ImageTransparency = 0.8
+shadow.ZIndex = 0
+
+local title = Instance.new("TextLabel", main)
+title.Size = UDim2.new(1, 0, 0, 42)
+title.BackgroundTransparency = 1
+title.Text = "🚀 Si Li Côn"
+title.Font = Enum.Font.GothamBold
+title.TextSize = 20
+title.TextColor3 = Color3.fromRGB(125, 200, 255) -- xanh dương sáng
+
+local content = Instance.new("ScrollingFrame", main)
+content.Size = UDim2.new(1, -20, 1, -60)
+content.Position = UDim2.new(0, 10, 0, 50)
+content.BackgroundTransparency = 1
+content.CanvasSize = UDim2.new(0, 0, 0, 0)
+content.ScrollBarThickness = 4
+content.AutomaticCanvasSize = Enum.AutomaticSize.Y
+content.ScrollingDirection = Enum.ScrollingDirection.Y
+local layout = Instance.new("UIListLayout", content)
+layout.Padding = UDim.new(0, 8)
+layout.SortOrder = Enum.SortOrder.LayoutOrder
+
+local logo = Instance.new("ImageButton", gui)
+logo.Name = "ToggleButton"
+logo.Size = UDim2.new(0, 45, 0, 45)
+logo.Position = UDim2.new(0, 10, 0.5, -22)
+logo.BackgroundColor3 = Color3.fromRGB(40, 80, 120)
+logo.Image = "rbxassetid://92278047249087"
+Instance.new("UICorner", logo)
+logo.Draggable = true
+logo.MouseButton1Click:Connect(function()
+	main.Visible = not main.Visible
+end)
+
+-- Button creator
+local function createButton(text, callback)
+	local btn = Instance.new("TextButton", content)
+	btn.Size = UDim2.new(0.95, 0, 0, 36)
+	btn.BackgroundColor3 = Color3.fromRGB(0, 122, 204) -- Xanh dương đậm
+	btn.TextColor3 = Color3.new(1, 1, 1)
+	btn.Text = "🔘 " .. text
+	btn.Font = Enum.Font.GothamBold
+	btn.TextSize = 14
+	btn.AutoButtonColor = false
+	Instance.new("UICorner", btn)
+	local stroke = Instance.new("UIStroke", btn)
+	stroke.Thickness = 1
+	stroke.Color = Color3.fromRGB(255, 255, 255)
+	stroke.Transparency = 0.6
+
+	local state = false
+	btn.MouseButton1Click:Connect(function()
+		state = not state
+		btn.BackgroundColor3 = state and Color3.fromRGB(0, 180, 140) or Color3.fromRGB(0, 122, 204)
+		callback(state)
+	end)
+end
+
+-- Tab Title creator
+local function createTabTitle(titleText)
+	local lbl = Instance.new("TextLabel", content)
+	lbl.Size = UDim2.new(1, 0, 0, 30)
+	lbl.BackgroundTransparency = 1
+	lbl.Text = "「 " .. titleText .. " 」"
+	lbl.TextColor3 = Color3.fromRGB(0, 200, 255)
+	lbl.Font = Enum.Font.GothamBold
+	lbl.TextScaled = true
+	return lbl
+end
+
+-- Sound & Notify vẫn giữ nguyên
